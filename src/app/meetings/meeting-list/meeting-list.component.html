@@ -3,3 +3,14 @@
   [buttonName]="'Add meeting'"
   (buttonClicked)="openAddMeetingDialog()"
 ></app-list-header>
+
+<div class="mat-elevation-z8">
+  <mwl-calendar-week-view
+    [events]="events"
+    [viewDate]="viewDate"
+    [dayStartHour]="9"
+    [dayEndHour]="17"
+    [weekStartsOn]="1"
+    [excludeDays]="[0, 6]"
+  ></mwl-calendar-week-view>
+</div>

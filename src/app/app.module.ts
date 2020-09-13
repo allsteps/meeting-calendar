@@ -10,6 +10,8 @@ import { UsersModule } from './users/users.module';
 import { MeetingsModule } from './meetings/meetings.module';
 import { AppRoutingModule } from './app-routing.module';
 import { DialogComponent } from './shared/dialog/dialog.component';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,8 @@ import { DialogComponent } from './shared/dialog/dialog.component';
     MaterialModule,
     UsersModule,
     MeetingsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })
   ],
   providers: [],
   bootstrap: [AppComponent]

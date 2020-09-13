@@ -29,7 +29,7 @@ export interface CreateComponentOptions<TInnerComponentType extends Type<unknown
 const defaultDialogConfig: Partial<MatDialogConfig> = {
   disableClose: true,
   autoFocus: false,
-  width: '600px',
+  width: '400px',
   restoreFocus: false,
 };
 

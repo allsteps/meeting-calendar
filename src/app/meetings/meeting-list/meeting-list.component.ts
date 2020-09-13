@@ -9,6 +9,14 @@ import { AddMeetingComponent } from '../add-meeting/add-meeting.component';
   styleUrls: ['./meeting-list.component.scss']
 })
 export class MeetingListComponent implements OnInit {
+  public events = [{
+    start: new Date('September 7, 2020 13:35:32'),
+    end: new Date('September 7, 2020 14:35:32'),
+    title: 'test',
+    color: { primary: '#3F51B5', secondary: '#D8DCF0' },
+    allDay: false,
+  }];
+  viewDate: Date = new Date();
 
   constructor(private dialog: MatDialog) { }
 

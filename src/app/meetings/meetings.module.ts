@@ -4,6 +4,8 @@ import { MeetingListComponent } from './meeting-list/meeting-list.component';
 import { MaterialModule } from '../shared/material/material.module';
 import { ListHeaderModule } from '../shared/list-header/list-header.module';
 import { AddMeetingComponent } from './add-meeting/add-meeting.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
 
 
 
@@ -12,7 +14,10 @@ import { AddMeetingComponent } from './add-meeting/add-meeting.component';
   imports: [
     CommonModule,
     MaterialModule,
-    ListHeaderModule
+    FormsModule,
+    ReactiveFormsModule,
+    ListHeaderModule,
+    CalendarModule
   ]
 })
 export class MeetingsModule { }
