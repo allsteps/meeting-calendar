@@ -1,1 +1,14 @@
-<p>edit-user works!</p>
+<form [formGroup]="form">
+  <div class="form-container">
+    <div class="form-section">
+      <mat-form-field class="form-input" appearance="outline">
+        <input
+          formControlName="name"
+          matInput
+          type="text"
+        >
+        <mat-label>{{ 'Name' }}</mat-label>
+      </mat-form-field>
+    </div>
+  </div>
+</form>

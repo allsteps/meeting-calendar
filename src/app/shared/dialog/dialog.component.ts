@@ -85,13 +85,17 @@ export class DialogComponent implements OnInit, OnDestroy {
     this.data = { ...defaultDialogData, ...data };
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     const factory = this.resolver.resolveComponentFactory(this.data.innerComponentType);
     this.componentRef = this.vcRef.createComponent(factory);
   }
 
-  okButton() {
+  okButton(): void {
     this.closeDialogEvent.next(true);
+  }
+
+  checkDisableButton(): boolean {
+    return !this.componentRef.instance.form.valid;
   }
 
   closeDialog(): void {
@@ -99,7 +103,7 @@ export class DialogComponent implements OnInit, OnDestroy {
     this.dialogRef.close();
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     if (this.componentRef) {
       this.componentRef.destroy();
       this.closeDialogEvent.complete();

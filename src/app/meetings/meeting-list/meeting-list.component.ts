@@ -19,7 +19,6 @@ export class MeetingListComponent implements OnInit {
    * Open AddMeeting modal.
    */
   public openAddMeetingDialog(): void {
-    console.log('add meeting');
     const openedDialog = createDialogComponent({
       dialog: this.dialog,
       dialogData: {
@@ -33,7 +32,6 @@ export class MeetingListComponent implements OnInit {
     openedDialog.componentInstance.closeDialog$.subscribe(result => {
       if (result) {
         openedDialog.close();
-        console.log('click save meetin');
       }
     });
   }

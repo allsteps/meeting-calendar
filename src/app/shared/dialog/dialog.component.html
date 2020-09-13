@@ -28,6 +28,7 @@
       mat-raised-button
       color="primary"
       class="dialog-button"
+      [disabled]="checkDisableButton()"
       *ngIf="data.buttonCloseTrue"
     >{{ data.buttonCloseTrue }}</button>
   </mat-dialog-actions>
