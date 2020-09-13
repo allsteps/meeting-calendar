@@ -1,0 +1,26 @@
+mat-drawer-container {
+  height: calc(100% - 64px);
+}
+
+mat-drawer-content {
+  box-sizing: border-box;
+  padding: 12px;
+}
+
+mat-icon {
+  margin-right: 12px;
+}
+
+mat-list-item:hover {
+  background-color: #3F51B5;
+  cursor: pointer;
+  mat-icon, span {
+    color: white;
+  }
+}
+
+.menu {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+}

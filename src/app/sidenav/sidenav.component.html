@@ -1,0 +1,11 @@
+<mat-drawer-container>
+  <mat-drawer mode="side" opened>
+    <mat-list class="menu">
+      <mat-list-item *ngFor="let menuItem of menuList">
+        <mat-icon color="primary">{{ menuItem.icon }}</mat-icon>
+        <span>{{ menuItem.name }}</span>
+      </mat-list-item>
+    </mat-list>
+  </mat-drawer>
+  <mat-drawer-content>Main content</mat-drawer-content>
+</mat-drawer-container>
