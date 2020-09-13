@@ -20,6 +20,7 @@ export class AddMeetingComponent implements OnInit {
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       name: new FormControl('', Validators.required),
+      date: new FormControl('', Validators.required),
     });
     this.dialog.closeDialog$.subscribe(save => {
       if (save) {
