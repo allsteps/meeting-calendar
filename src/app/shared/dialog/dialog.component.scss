@@ -1,0 +1,21 @@
+.dialog-header {
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dialog-header-close {
+  margin: 0 0 16px;
+}
+
+.dialog-actions {
+  justify-content: flex-end;
+  display: flex;
+  align-items: center;
+  margin-bottom: 0px;
+}
+
+.dialog-button {
+  margin-left: 24px;
+}

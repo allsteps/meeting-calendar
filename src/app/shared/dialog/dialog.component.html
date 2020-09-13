@@ -1,1 +1,34 @@
-<p>dialog works!</p>
+<div>
+  <div class="dialog-header">
+    <h1>{{ data.title }}</h1>
+    <button
+      mat-button
+      color="primary"
+      mat-dialog-close
+      class="dialog-header-close"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <mat-dialog-content>
+    <ng-template #dialogContent></ng-template>
+  </mat-dialog-content>
+
+  <mat-dialog-actions class="dialog-actions">
+    <button
+      (click)="closeDialog()"
+      mat-stroked-button
+      color="primary"
+      class="dialog-button"
+      *ngIf="data.buttonCloseFalse"
+    >{{ data.buttonCloseFalse }}</button>
+    <button
+      (click)="okButton()"
+      mat-raised-button
+      color="primary"
+      class="dialog-button"
+      *ngIf="data.buttonCloseTrue"
+    >{{ data.buttonCloseTrue }}</button>
+  </mat-dialog-actions>
+</div>
