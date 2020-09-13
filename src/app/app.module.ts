@@ -9,11 +9,13 @@ import { SidenavComponent } from './sidenav/sidenav.component';
 import { UsersModule } from './users/users.module';
 import { MeetingsModule } from './meetings/meetings.module';
 import { AppRoutingModule } from './app-routing.module';
+import { DialogComponent } from './shared/dialog/dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SidenavComponent
+    SidenavComponent,
+    DialogComponent
   ],
   imports: [
     BrowserModule,

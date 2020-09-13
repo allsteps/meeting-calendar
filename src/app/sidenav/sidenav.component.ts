@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-interface Menu {
+interface IMenu {
   name: string;
   icon: string;
   route: string;
@@ -12,7 +12,7 @@ interface Menu {
   styleUrls: ['./sidenav.component.scss']
 })
 export class SidenavComponent implements OnInit {
-  public menuList: Menu[] = [];
+  public menuList: IMenu[] = [];
 
   constructor() {
     this.menuList = [
