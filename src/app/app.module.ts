@@ -6,6 +6,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MaterialModule } from './shared/material/material.module';
 import { SidenavComponent } from './sidenav/sidenav.component';
+import { UsersModule } from './users/users.module';
+import { MeetingsModule } from './meetings/meetings.module';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -15,7 +18,10 @@ import { SidenavComponent } from './sidenav/sidenav.component';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    MaterialModule
+    MaterialModule,
+    UsersModule,
+    MeetingsModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
