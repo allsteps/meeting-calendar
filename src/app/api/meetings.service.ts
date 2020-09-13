@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { IUser } from '../users/user-list/user-list.component';
 
 export interface IMeeting {
   name: string;
-  day: string;
-  startsAt: string;
-  finishesAt: string;
+  date: Date;
+  start: number;
+  end: number;
   participants: number[];
 }
 
@@ -23,14 +22,14 @@ export class MeetingsService {
    * @param meeting
    */
   public addMeeting(meeting: IMeeting): Observable<IMeeting> {
-    // const result = {
-    //   name: 'test',
-    //   day: 'test',
-    //   startsAt: 'test',
-    //   finishesAt: 'test',
-    //   participants: [1, 2, 3],
-    // };
     this.meetingList.push(meeting);
     return of(meeting);
+  }
+
+  /**
+   * Returns an array of meetings
+   */
+  public getMeetings(): Observable<IMeeting[]> {
+    return of(this.meetingList);
   }
 }

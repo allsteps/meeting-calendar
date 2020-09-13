@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MeetingsService } from 'src/app/api/meetings.service';
 import { createDialogComponent } from 'src/app/shared/dialog/dialog.component';
 import { AddMeetingComponent } from '../add-meeting/add-meeting.component';
 
@@ -9,18 +10,36 @@ import { AddMeetingComponent } from '../add-meeting/add-meeting.component';
   styleUrls: ['./meeting-list.component.scss']
 })
 export class MeetingListComponent implements OnInit {
-  public events = [{
-    start: new Date('September 7, 2020 13:35:32'),
-    end: new Date('September 7, 2020 14:35:32'),
-    title: 'test',
-    color: { primary: '#3F51B5', secondary: '#D8DCF0' },
-    allDay: false,
-  }];
+  public events = [];
   viewDate: Date = new Date();
 
-  constructor(private dialog: MatDialog) { }
+  constructor(
+    private dialog: MatDialog,
+    private meetingsService: MeetingsService
+  ) { }
 
   ngOnInit(): void {
+    this.getMeetingList();
+  }
+
+  private getMeetingList(): void {
+    this.events = [];
+
+    this.meetingsService.getMeetings().subscribe(meetings => {
+      meetings.forEach(meeting => {
+        const startTime = new Date(meeting.date);
+        startTime.setHours(meeting.start, 0, 0);
+        const endTime = new Date(meeting.date);
+        endTime.setHours(meeting.end, 0, 0);
+        this.events.push({
+          start: startTime,
+          end: endTime,
+          title: meeting.name,
+          color: { primary: '#3F51B5', secondary: '#D8DCF0' },
+          allDay: false,
+        });
+      });
+    });
   }
 
   /**
@@ -40,6 +59,9 @@ export class MeetingListComponent implements OnInit {
     openedDialog.componentInstance.closeDialog$.subscribe(result => {
       if (result) {
         openedDialog.close();
+        setTimeout(() => {
+          this.getMeetingList();
+        });
       }
     });
   }
