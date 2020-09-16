@@ -5,6 +5,21 @@
 ></app-list-header>
 
 <div class="mat-elevation-z8">
+  <div class="filter-container">
+    <form [formGroup]="form">
+      <mat-form-field>
+        <mat-label>Filter meetings by user</mat-label>
+        <mat-select formControlName="users" multiple (selectionChange)="filterByUser()">
+          <mat-option
+            *ngFor="let user of userList"
+            [value]="user.id"
+          >
+            {{user.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </form>
+  </div>
   <mwl-calendar-week-view
     [events]="events"
     [viewDate]="viewDate"

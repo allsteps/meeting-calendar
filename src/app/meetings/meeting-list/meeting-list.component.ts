@@ -1,8 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { MeetingsService } from 'src/app/api/meetings.service';
+import { UsersService } from 'src/app/api/users.service';
 import { createDialogComponent } from 'src/app/shared/dialog/dialog.component';
+import { IUser } from 'src/app/users/user-list/user-list.component';
 import { AddMeetingComponent } from '../add-meeting/add-meeting.component';
 
 @Component({
@@ -13,16 +16,39 @@ import { AddMeetingComponent } from '../add-meeting/add-meeting.component';
 export class MeetingListComponent implements OnInit, OnDestroy {
   public events = [];
   public viewDate: Date = new Date();
+  public userList: IUser[] = [];
+  public form: FormGroup;
 
   private subscriptions = new Subscription();
 
   constructor(
     private dialog: MatDialog,
-    private meetingsService: MeetingsService
+    private formBuilder: FormBuilder,
+    private meetingsService: MeetingsService,
+    private usersService: UsersService
   ) { }
 
   ngOnInit(): void {
+    this.form = this.formBuilder.group({
+      users: new FormControl('')
+    });
     this.getMeetingList();
+    this.getUserList().then(response => {
+      this.userList = response;
+      this.form.controls.users.setValue(
+        this.userList.map(user => user.id)
+      );
+    });
+  }
+
+  private async getUserList(): Promise<IUser[]> {
+    let result: IUser[] = [];
+    try {
+      result = await this.usersService.getUsers().toPromise();
+    } catch (error) {
+      // Manage error
+    }
+    return result;
   }
 
   private getMeetingList(): void {
@@ -68,6 +94,26 @@ export class MeetingListComponent implements OnInit, OnDestroy {
           this.getMeetingList();
         });
       }
+    });
+  }
+
+  public filterByUser(): void {
+    this.events = [];
+
+    this.meetingsService.getMeetingsByUser(this.form.controls.users.value).subscribe(meetings => {
+      meetings.forEach(meeting => {
+        const startTime = new Date(meeting.date);
+        startTime.setHours(meeting.start, 0, 0);
+        const endTime = new Date(meeting.date);
+        endTime.setHours(meeting.end, 0, 0);
+        this.events.push({
+          start: startTime,
+          end: endTime,
+          title: meeting.name,
+          color: { primary: '#3F51B5', secondary: '#D8DCF0' },
+          allDay: false,
+        });
+      });
     });
   }
 

@@ -42,4 +42,21 @@ export class MeetingsService {
     });
     return of(result);
   }
+
+  /**
+   * Given an array of users, returns an array of meetings
+   */
+  public getMeetingsByUser(userList: number[]): Observable<IMeeting[]> {
+    const result: IMeeting[] = [];
+    this.meetingList.forEach(meeting => {
+      userList.forEach(user => {
+        meeting.participants.forEach(participant => {
+          if (participant === user && result.indexOf(meeting) === -1) {
+            result.push(meeting);
+          }
+        });
+      });
+    });
+    return of(result);
+  }
 }
