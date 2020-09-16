@@ -19,7 +19,7 @@
   </mat-form-field>
   <mat-form-field>
     <mat-label>Start time</mat-label>
-    <mat-select formControlName="start">
+    <mat-select formControlName="start" (selectionChange)="filterAvailableUsers()">
       <mat-option *ngFor="let hour of timeSlots" [value]="hour">
         {{hour}}:00
       </mat-option>
@@ -27,7 +27,7 @@
   </mat-form-field>
   <mat-form-field>
     <mat-label>End time</mat-label>
-    <mat-select formControlName="end">
+    <mat-select formControlName="end" (selectionChange)="filterAvailableUsers()">
       <mat-option *ngFor="let hour of filterEndTime()" [value]="hour">
         {{hour}}:00
       </mat-option>
@@ -36,7 +36,13 @@
   <mat-form-field>
     <mat-label>Participants</mat-label>
     <mat-select formControlName="participants" multiple>
-      <mat-option *ngFor="let user of userList" [value]="user.id">{{user.name}}</mat-option>
+      <mat-option
+        *ngFor="let user of userList"
+        [value]="user.id"
+        [disabled]="checkIfUserIsUnavailable(user)"
+      >
+        {{user.name}}
+      </mat-option>
     </mat-select>
   </mat-form-field>
 </form>

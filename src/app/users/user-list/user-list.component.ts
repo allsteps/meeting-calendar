@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
+import { Subscription } from 'rxjs';
 import { UsersService } from 'src/app/api/users.service';
 import { createDialogComponent } from 'src/app/shared/dialog/dialog.component';
 import { AddUserComponent } from '../add-user/add-user.component';
@@ -15,9 +16,11 @@ export interface IUser {
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.scss']
 })
-export class UserListComponent implements OnInit {
-  displayedColumns: string[] = ['name'];
-  dataSource = new MatTableDataSource<any>([]);
+export class UserListComponent implements OnInit, OnDestroy {
+  public displayedColumns: string[] = ['name'];
+  public dataSource = new MatTableDataSource<any>([]);
+
+  private subscriptions = new Subscription();
 
   constructor(
     private dialog: MatDialog,
@@ -29,9 +32,11 @@ export class UserListComponent implements OnInit {
   }
 
   private getUserList(): void {
-    this.usersService.getUsers().subscribe(data => {
-      this.dataSource = new MatTableDataSource<IUser>(data);
-    });
+    this.subscriptions.add(
+      this.usersService.getUsers().subscribe(data => {
+        this.dataSource = new MatTableDataSource<IUser>(data);
+      })
+    );
   }
 
   /**
@@ -54,5 +59,9 @@ export class UserListComponent implements OnInit {
         this.getUserList();
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 }

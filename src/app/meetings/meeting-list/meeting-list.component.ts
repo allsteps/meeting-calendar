@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
 import { MeetingsService } from 'src/app/api/meetings.service';
 import { createDialogComponent } from 'src/app/shared/dialog/dialog.component';
 import { AddMeetingComponent } from '../add-meeting/add-meeting.component';
@@ -9,9 +10,11 @@ import { AddMeetingComponent } from '../add-meeting/add-meeting.component';
   templateUrl: './meeting-list.component.html',
   styleUrls: ['./meeting-list.component.scss']
 })
-export class MeetingListComponent implements OnInit {
+export class MeetingListComponent implements OnInit, OnDestroy {
   public events = [];
-  viewDate: Date = new Date();
+  public viewDate: Date = new Date();
+
+  private subscriptions = new Subscription();
 
   constructor(
     private dialog: MatDialog,
@@ -25,21 +28,23 @@ export class MeetingListComponent implements OnInit {
   private getMeetingList(): void {
     this.events = [];
 
-    this.meetingsService.getMeetings().subscribe(meetings => {
-      meetings.forEach(meeting => {
-        const startTime = new Date(meeting.date);
-        startTime.setHours(meeting.start, 0, 0);
-        const endTime = new Date(meeting.date);
-        endTime.setHours(meeting.end, 0, 0);
-        this.events.push({
-          start: startTime,
-          end: endTime,
-          title: meeting.name,
-          color: { primary: '#3F51B5', secondary: '#D8DCF0' },
-          allDay: false,
+    this.subscriptions.add(
+      this.meetingsService.getMeetings().subscribe(meetings => {
+        meetings.forEach(meeting => {
+          const startTime = new Date(meeting.date);
+          startTime.setHours(meeting.start, 0, 0);
+          const endTime = new Date(meeting.date);
+          endTime.setHours(meeting.end, 0, 0);
+          this.events.push({
+            start: startTime,
+            end: endTime,
+            title: meeting.name,
+            color: { primary: '#3F51B5', secondary: '#D8DCF0' },
+            allDay: false,
+          });
         });
-      });
-    });
+      })
+    );
   }
 
   /**
@@ -64,6 +69,10 @@ export class MeetingListComponent implements OnInit {
         });
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 
 }
